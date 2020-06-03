@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "cugen"
+version = "0.0.0"
+description = "Using GPU to develop a 3-SAT solver"
+authors = ["SamyAB <aitb.samy@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.7"
+
+[tool.poetry.dev-dependencies]
+pytest = "^5.2"
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"
