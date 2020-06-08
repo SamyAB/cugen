@@ -1,7 +1,7 @@
 import cupy
 import pytest
 
-from cugen.sat_problem_modleisation.evaluation import evaluate_individual_fitness
+from cugen.sat_problem_modelling.evaluation import evaluate_individual_fitness
 
 
 @pytest.fixture()
