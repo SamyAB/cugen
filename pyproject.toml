@@ -1,11 +1,14 @@
 [tool.poetry]
 name = "cugen"
-version = "0.0.0"
+version = "0.1.0"
+license="Apache-2.0"
 description = "Using GPU to develop a 3-SAT solver"
 authors = ["SamyAB <aitb.samy@gmail.com>"]
+readme="README.md"
 
 [tool.poetry.dependencies]
 python = "^3.7"
+cupy-cuda102 = "^7.5.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
