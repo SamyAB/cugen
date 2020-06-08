@@ -1,7 +1,7 @@
 import cupy
 import pytest
 
-from cugen.sat_problem_modelling.evaluation import evaluate_individual_fitness
+from cugen.sat_problem_modelling.evaluation import evaluate_individual_fitness, evaluate_population
 
 
 @pytest.fixture()
@@ -62,3 +62,22 @@ def test_evaluate_individual_fitness_returns_half_when_individual_satisfies_half
 
     # Then
     assert individual_fitness == half
+
+
+def test_evaluate_population_should_return_the_list_of_fitness_values_for_the_spectrum_of_individuals_used(
+        fixture_formula_with_one_literal_clauses
+):
+    # Given
+    population = cupy.array([
+        [0, 1, 0, 1],
+        [1, 0, 1, 0],
+        [0, 1, 1, 0]
+    ])
+
+    expected_population_fitness_values = cupy.array([1., 0., 0.5])
+
+    # When
+    population_fitness_values = evaluate_population(population, fixture_formula_with_one_literal_clauses)
+
+    # Then
+    cupy.testing.assert_array_equal(population_fitness_values, expected_population_fitness_values)
