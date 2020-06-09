@@ -2,7 +2,7 @@ from unittest.mock import patch
 
 import cupy
 
-from cugen.sat_problem_modelling.mutation import individual_mutation
+from cugen.sat_problem_modelling.mutation import individual_mutation, population_mutation
 
 TESTED_MODULE = 'cugen.sat_problem_modelling.mutation'
 
@@ -32,3 +32,32 @@ def test_individual_mutation_returns_the_input_individual_if_random_value_is_bel
 
     # Then
     assert mutated_individual is input_individual
+
+
+@patch(f'{TESTED_MODULE}.cupy.random.uniform')
+@patch(f'{TESTED_MODULE}.cupy.random.randint', return_value=cupy.array(2))
+def test_population_mutation_should_apply_the_mutation_on_all_individuals_of_the_population(_, mock_uniform):
+    # Given
+    population = cupy.array([
+        [0, 0, 0, 1],
+        [0, 1, 0, 0],
+        [1, 0, 1, 1],
+        [0, 1, 0, 1],
+        [1, 0, 1, 0],
+    ])
+
+    mock_uniform.side_effect = [cupy.array(0.001), cupy.array(1), cupy.array(1), cupy.array(1), cupy.array(0.001)]
+
+    expected_mutated_population = cupy.array([
+        [0, 0, 1, 1],
+        [0, 1, 0, 0],
+        [1, 0, 1, 1],
+        [0, 1, 0, 1],
+        [1, 0, 0, 0],
+    ])
+
+    # When
+    mutated_population = population_mutation(population)
+
+    # Then
+    cupy.testing.assert_array_equal(mutated_population, expected_mutated_population)

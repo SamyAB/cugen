@@ -20,3 +20,19 @@ def individual_mutation(individual: cupy.ndarray) -> cupy.ndarray:
         return mutated_individual
 
     return individual
+
+
+def population_mutation(population: cupy.ndarray) -> cupy.ndarray:
+    """
+    Runs the individual mutation for every individual in a given population
+
+    Note : This function might be a bottleneck as it uses a python for loop, if anyone has an idea that would make
+    go faster, please share it
+
+    :param population: The set of individuals to mutate
+    :return: The input population with individual randomly mutated
+    """
+    for individual_index, individual in enumerate(population):
+        population[individual_index] = individual_mutation(individual)
+
+    return population
