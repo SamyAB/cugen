@@ -16,7 +16,9 @@ def select_individuals(population, population_fitness):
     """
     population_size = population.shape[0]
     target_population_size = population_size * SELECTION_RATIO
-    selected_individuals = cupy.random.choice(population_size, size=target_population_size, p=population_fitness)
+    selection_probability = cupy.divide(population_fitness, cupy.sum(population_fitness))
+
+    selected_individuals = cupy.random.choice(population_size, size=target_population_size, p=selection_probability)
     selected_individuals_with_no_duplication = cupy.unique(selected_individuals)
 
     return population[selected_individuals_with_no_duplication, :]

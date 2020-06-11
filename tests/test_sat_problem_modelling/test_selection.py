@@ -8,7 +8,10 @@ TESTED_MODULE = 'cugen.sat_problem_modelling.selection'
 
 
 @patch(f'{TESTED_MODULE}.cupy.random.choice')
-def test_select_individuals_calls_random_choice_with_the_right_parameters(mock_random_choice):
+@patch(f'{TESTED_MODULE}.cupy.divide')
+def test_select_individuals_calls_random_choice_with_the_right_parameters_by_transforming_the_fitness_to_probabilities(
+        mock_divide, mock_random_choice
+):
     # Given
     population = cupy.array([
         [1, 0, 0, 0],
@@ -18,6 +21,8 @@ def test_select_individuals_calls_random_choice_with_the_right_parameters(mock_r
     ])
     population_fitness = cupy.array([1., 0.5, 0.5, 0.])
 
+    selection_probabilities = cupy.array([0.2, 0.2, 0.4, 0.2])
+    mock_divide.return_value = selection_probabilities
     mock_random_choice.return_value = [0, 1]
 
     expected_selected_individuals = cupy.array([
@@ -30,7 +35,7 @@ def test_select_individuals_calls_random_choice_with_the_right_parameters(mock_r
 
     # Then
     mock_random_choice.assert_called_once_with(population.shape[0], size=int(population.shape[0] * SELECTION_RATIO),
-                                               p=population_fitness)
+                                               p=selection_probabilities)
     cupy.testing.assert_array_equal(selected_individuals, expected_selected_individuals)
 
 
