@@ -25,6 +25,8 @@ def test_optimize_should_call_the_right_functions_in_the_right_order(mock_argmax
     ])
     number_of_iterations = 10
     population_size = 2
+    selection_ratio = 0.5
+    mutation_probability = 0.25
 
     mock_generate_first_generation.return_value = "Population"
     mock_evaluate_population.return_value = "Population evaluation array"
@@ -35,12 +37,13 @@ def test_optimize_should_call_the_right_functions_in_the_right_order(mock_argmax
     mock_argmax.return_value = 0
 
     expected_evaluate_population_calls = [call("Population", formula)] * (number_of_iterations + 1)
-    expected_selection_calls = [call("Population", "Population evaluation array")] * number_of_iterations
+    expected_selection_calls = [call("Population", "Population evaluation array",
+                                     selection_ratio)] * number_of_iterations
     expected_crossover_calls = [call("Selected population", population_size)] * number_of_iterations
-    expected_mutation_calls = [call("Crossover population")]
+    expected_mutation_calls = [call("Crossover population", mutation_probability)]
 
     # When
-    _ = optimize(formula, number_of_iterations, population_size)
+    _ = optimize(formula, number_of_iterations, population_size, selection_ratio, mutation_probability)
 
     # Then
     mock_generate_first_generation.assert_called_once_with(population_size, formula.shape[1])
@@ -65,11 +68,13 @@ def test_optimizer_stops_when_the_perfect_individual_has_been_found_in_a_generat
     ])
     number_of_generations = 15
     population_size = 4
+    selection_ratio = 0.5
+    mutation_probability = .25
 
     mock_evaluation.side_effect = [cupy.array([0.5, 0.2, 0.3, 0.7]), cupy.array([1.0, 0.2, 0.3, 0.4])]
 
     # When
-    _ = optimize(formula, number_of_generations, population_size)
+    _ = optimize(formula, number_of_generations, population_size, selection_ratio, mutation_probability)
 
     # Then
     mock_selection.assert_called_once()
@@ -81,9 +86,11 @@ def test_optimize_does_not_start_optimization_if_there_is_a_perfect_individual_i
     formula = cupy.array([[1., 0., 1.]])
     number_of_generations = 10
     population_size = 3
+    selection_ratio = 0.5
+    mutation_probability = .25
 
     # When
-    _ = optimize(formula, number_of_generations, population_size)
+    _ = optimize(formula, number_of_generations, population_size, selection_ratio, mutation_probability)
 
     # Then
     mock_evaluate.assert_called_once()
