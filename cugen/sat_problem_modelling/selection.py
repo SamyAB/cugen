@@ -1,9 +1,7 @@
 import cupy
 
-SELECTION_RATIO = 0.5
 
-
-def select_individuals(population, population_fitness):
+def select_individuals(population: cupy.ndarray, population_fitness: cupy.ndarray, selection_ratio: float):
     """
     Selects randomly, with a weight, a number of individuals.
 
@@ -12,13 +10,14 @@ def select_individuals(population, population_fitness):
 
     :param population: The population from which the individuals are selected
     :param population_fitness: The fitness of each individual in the population, used as weights in the random choice
+    :param selection_ratio: Between 0 and 1. The ratio of input population individuals to return
     :return: A sample of the population with a size <= size(population) * SELECTION_RATIO
     """
     population_size = population.shape[0]
-    target_population_size = population_size * SELECTION_RATIO
-    selection_probability = cupy.divide(population_fitness, cupy.sum(population_fitness))
+    target_population_size = int(population_size * selection_ratio)
 
-    selected_individuals = cupy.random.choice(population_size, size=target_population_size, p=selection_probability)
-    selected_individuals_with_no_duplication = cupy.unique(selected_individuals)
+    selection_score = cupy.random.uniform(size=population_size) * population_fitness
 
-    return population[selected_individuals_with_no_duplication, :]
+    population_sorted_by_selection_score = population[cupy.argsort(selection_score)[::-1]]
+
+    return population_sorted_by_selection_score[:target_population_size]
