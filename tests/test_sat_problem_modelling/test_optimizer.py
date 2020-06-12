@@ -99,3 +99,16 @@ def test_generate_random_first_generation_returns_population_with_the_right_shap
 
     # Then
     assert initial_population.shape == (number_of_individuals, number_of_literals)
+
+
+def test_generate_random_first_generation_returns_individuals_with_values_that_are_either_0_or_1():
+    # Given
+    number_of_individuals = 100
+    number_of_literals = 40
+
+    # When
+    population = generate_random_first_generation(number_of_individuals, number_of_literals)
+
+    # Then
+    assert cupy.all(population <= 1)
+    assert cupy.all(population >= 0)

@@ -14,7 +14,7 @@ def generate_random_first_generation(population_size, number_of_genes_in_populat
     :param number_of_genes_in_population: The number of values representing each individuals
     :return: An initial population
     """
-    return cupy.random.uniform(low=0, high=1, size=(population_size, number_of_genes_in_population))
+    return cupy.random.randint(low=0, high=2, size=(population_size, number_of_genes_in_population))
 
 
 def optimize(formula: cupy.ndarray, maximum_number_of_generations: int, population_size: int) -> cupy.ndarray:
