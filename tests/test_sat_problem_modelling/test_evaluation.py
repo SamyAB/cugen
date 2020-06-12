@@ -81,3 +81,26 @@ def test_evaluate_population_should_return_the_list_of_fitness_values_for_the_sp
 
     # Then
     cupy.testing.assert_array_equal(population_fitness_values, expected_population_fitness_values)
+
+
+def test_evaluate_population_accurately_calculates_the_fitness_of_each_individual_with_regard_to_the_formula():
+    # Given
+    population = cupy.array([
+        [1, 0, 1, 0],
+        [1, 0, 0, 0],
+        [1, 0, 1, 1],
+    ])
+    formula = cupy.array([
+        [1, cupy.nan, cupy.nan, cupy.nan],
+        [cupy.nan, 1, cupy.nan, cupy.nan],
+        [cupy.nan, cupy.nan, 1, cupy.nan],
+        [cupy.nan, cupy.nan, cupy.nan, 1],
+    ])
+
+    expected_population_fitness = cupy.array([0.5, 0.25, 0.75])
+
+    # When
+    population_fitness = evaluate_population(population, formula)
+
+    # Then
+    cupy.testing.assert_array_equal(population_fitness, expected_population_fitness)

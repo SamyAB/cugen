@@ -22,4 +22,4 @@ def evaluate_population(population: cupy.ndarray, formula: cupy.ndarray) -> cupy
     :param formula: The CNF formula to satisfy
     :return: The values of fitness of each individual in the input population as an array
     """
-    return cupy.mean(cupy.any(population[:, cupy.newaxis] == formula, axis=1), axis=1, dtype=cupy.float16)
+    return cupy.mean(cupy.any(population[:, cupy.newaxis] == formula, axis=2), axis=1, dtype=cupy.float16)
