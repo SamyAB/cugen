@@ -37,5 +37,5 @@ def read_dimacs_file(dimacs_file_path: Path) -> cupy.ndarray:
         clauses = []
         for line in dimacs_file.readlines():
             if line[0] == '%':
-                return cupy.concatenate(clauses)
+                return cupy.array(clauses)
             clauses.append(transform_dimacs_clause_to_cugen_clause(line, number_of_literals))
