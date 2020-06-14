@@ -22,7 +22,7 @@ docs = ["sphinx", "zope.interface"]
 tests = ["coverage", "hypothesis", "pympler", "pytest (>=4.3.0)", "six", "zope.interface"]
 
 [[package]]
-category = "main"
+category = "dev"
 description = "behave is behaviour-driven development, Python style"
 name = "behave"
 optional = false
@@ -131,7 +131,7 @@ pyparsing = ">=2.0.2"
 six = "*"
 
 [[package]]
-category = "main"
+category = "dev"
 description = "parse() is the opposite of format()"
 name = "parse"
 optional = false
@@ -139,7 +139,7 @@ python-versions = "*"
 version = "1.15.0"
 
 [[package]]
-category = "main"
+category = "dev"
 description = "Simplifies to build parse types based on the parse module"
 name = "parse-type"
 optional = false
@@ -259,7 +259,7 @@ docs = ["sphinx", "jaraco.packaging (>=3.2)", "rst.linker (>=1.9)"]
 testing = ["jaraco.itertools", "func-timeout"]
 
 [metadata]
-content-hash = "0d0d80828c4b53f1c7420d79363c565b724878eed97c03d9f7cafd6f3535b5b0"
+content-hash = "8a19240d195074d3c47883e65bc8517ef163823bb037d561e08f7dbab5d2174a"
 python-versions = "^3.7"
 
 [metadata.files]
