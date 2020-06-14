@@ -4,3 +4,8 @@ Feature: Solving SAT problems with cugen
     Given a simple CNF formula
     When the solver is run with set hyper parameters
     Then the solver finds the perfect solution
+
+  Scenario: read a DIMACS file and solves the SAT formula
+    Given a DIMACS CNF file
+    When the SAT solver command is run
+    Then the solver finds the perfect solution

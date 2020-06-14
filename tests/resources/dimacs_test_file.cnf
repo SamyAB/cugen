@@ -1,0 +1,15 @@
+c This formula has been created to test cugen
+c
+c    horn? no
+c    forced? no
+c    mixed sat? no
+c    clause length = 3
+c
+p cnf 4  5
+ 1 -2 3 4 0
+3 0
+-2 0
+1 0
+4 0
+%
+0
