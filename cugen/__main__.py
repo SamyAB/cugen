@@ -1,9 +1,11 @@
+import logging
 from pathlib import Path
 
 import typer
 
 from cugen.sat_problem_modelling.dimacs_reader import read_dimacs_file
 from cugen.sat_problem_modelling.optimizer import optimize
+from cugen.utils.logger import init_logger
 
 app = typer.Typer()
 
@@ -22,7 +24,12 @@ def sat_solver(
     :param mutation_probability: The probability of mutation of each new individual
     :param selection_ratio: The proportion of the population that survives to breed a new generation
     """
+    init_logger()
+
+    logging.info('Reading DIMACS file')
     formula = read_dimacs_file(path_to_dimacs_file)
+
+    logging.info('Start the optimization')
     best_individual = optimize(formula,
                                maximum_number_of_generations=number_of_maximum_generations,
                                mutation_probability=mutation_probability,

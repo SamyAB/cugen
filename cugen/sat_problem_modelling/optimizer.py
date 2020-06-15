@@ -1,3 +1,5 @@
+import logging
+
 import cupy
 
 from cugen.sat_problem_modelling.crossover import population_binary_crossover
@@ -36,11 +38,14 @@ def optimize(formula: cupy.ndarray, maximum_number_of_generations: int, populati
     population_fitness = evaluate_population(population, formula)
     best_fitness = cupy.max(population_fitness)
     best_individual = population[cupy.argmax(population_fitness)]
+    logging.info(f'In the first generation the best fitness was {best_fitness * 100}%')
 
     if best_fitness == 1.:
+        logging.info('Lucky ! The first generation contains the solution')
         return best_individual
 
-    for _ in range(maximum_number_of_generations):
+    generation = 0
+    for generation in range(maximum_number_of_generations):
         breeding_population = select_individuals(population, population_fitness, selection_ratio)
         population = population_mutation(population_binary_crossover(breeding_population, population_size),
                                          mutation_probability)
@@ -49,8 +54,18 @@ def optimize(formula: cupy.ndarray, maximum_number_of_generations: int, populati
         if cupy.max(population_fitness) > best_fitness:
             best_fitness = cupy.max(population_fitness)
             best_individual = population[cupy.argmax(population_fitness)]
+            logging.info(f'In the generation {generation + 1} new best individual has been found, '
+                         f'and it satisfies {best_fitness * 100}% of the formula')
 
             if best_fitness == 1.:
                 break
+        else:
+            if generation % 1000 == 0:
+                logging.info(f'After {generation + 1}, the best individuals satisfies {best_fitness * 100}% '
+                             f'of the formula')
+
+    logging.info('Optimization ended.')
+    logging.info(f'The best individual found after {generation + 1} generations, '
+                 f'and it satisfies {best_fitness * 100}% of the formula')
 
     return best_individual
