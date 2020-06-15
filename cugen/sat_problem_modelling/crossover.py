@@ -23,17 +23,19 @@ def population_binary_crossover(population: cupy.ndarray, next_generation_size: 
     :return: The new population with next_generation_size individuals
     """
     number_of_parents = population.shape[0]
-    last_mating_individual_index = number_of_parents if number_of_parents % 2 == 0 else number_of_parents - 2
-
+    last_mating_individual_index = number_of_parents if number_of_parents % 2 == 0 else number_of_parents - 1
     minimum_number_of_matings = next_generation_size // (number_of_parents // 2) + 1
 
     all_mating_seasons_children = []
     for _ in range(minimum_number_of_matings):
-        shuffled_population = cupy.random.permutation(population)
+        shuffled_population = cupy.random.permutation(population)[:last_mating_individual_index]
         pair_parents = shuffled_population[::2]
-        odd_parents = shuffled_population[1: last_mating_individual_index:2]
+        odd_parents = shuffled_population[1::2]
 
-        mating_season_children = cupy.where(cupy.random.uniform() <= 0.5, pair_parents, odd_parents)
+        mating_season_children = cupy.array([
+            uniform_binary_crossover(first_parent, second_parent)
+            for first_parent, second_parent in zip(pair_parents, odd_parents)
+        ])
 
         all_mating_seasons_children.append(mating_season_children)
 
