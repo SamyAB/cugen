@@ -24,7 +24,7 @@ def sat_solver(
     :param mutation_probability: The probability of mutation of each new individual
     :param selection_ratio: The proportion of the population that survives to breed a new generation
     """
-    init_logger()
+    init_logger(path_to_dimacs_file.stem, number_of_individuals_in_population)
 
     logging.info('Reading DIMACS file')
     formula = read_dimacs_file(path_to_dimacs_file)
