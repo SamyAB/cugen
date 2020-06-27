@@ -25,14 +25,14 @@ def compare_read_formula_with_the_expected_one(context: Context) -> None:
         [cupy.nan, 0, 0, cupy.nan, cupy.nan, 1, 1, cupy.nan, 1],
         [cupy.nan, 0, 0, 0, cupy.nan, cupy.nan, cupy.nan, cupy.nan, cupy.nan],
         [cupy.nan, 1, 1, 1, cupy.nan, cupy.nan, cupy.nan, cupy.nan, 0],
-        [0, cupy.nan, 0, cupy.nan, cupy.nan, cupy.nan, cupy.nan, cupy.nan, 0],
+        [0, cupy.nan, 0, cupy.nan, cupy.nan, cupy.nan, cupy.nan, cupy.nan, cupy.nan],
         [1, cupy.nan, 1, cupy.nan, cupy.nan, 1, cupy.nan, cupy.nan, cupy.nan],
         [cupy.nan, cupy.nan, cupy.nan, cupy.nan, cupy.nan, cupy.nan, cupy.nan, cupy.nan, cupy.nan],
         [1, cupy.nan, 0, cupy.nan, cupy.nan, 0, cupy.nan, cupy.nan, 0],
         [cupy.nan, 0, cupy.nan, cupy.nan, cupy.nan, 1, cupy.nan, 0, cupy.nan],
-        [0, cupy.nan, 1, cupy.nan, cupy.nan, cupy.nan, cupy.nan, 8, cupy.nan],
+        [0, cupy.nan, 1, cupy.nan, cupy.nan, cupy.nan, cupy.nan, 1, cupy.nan],
         [cupy.nan, 1, cupy.nan, cupy.nan, cupy.nan, cupy.nan, 1, cupy.nan, cupy.nan],
-        [cupy.nan, cupy.nan, 0, cupy.nan, 1, cupy.nan, cupy.nan, 0, 0],
+        [cupy.nan, cupy.nan, 0, cupy.nan, 1, cupy.nan, cupy.nan, 0, cupy.nan],
     ])
 
     cupy.testing.assert_array_equal(context.formula, expected_formula)
