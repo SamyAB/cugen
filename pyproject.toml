@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "cugen"
-version = "1.0.0"
+version = "1.0.1"
 license="Apache-2.0"
 description = "Using GPU to solve the boolean satisfiability problem"
 authors = ["SamyAB <aitb.samy@gmail.com>"]
