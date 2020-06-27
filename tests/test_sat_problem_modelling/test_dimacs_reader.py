@@ -22,6 +22,33 @@ def test_transform_dimacs_clause_to_cugen_clause_transforms_correctly_dimacs_cla
     cupy.testing.assert_array_equal(cugen_clause, expected_cugen_clause)
 
 
+def test_transform_dimacs_clause_to_cugen_clause_transforms_contradicting_literals_to_nan():
+    # Given
+    dimacs_clause_with_contradicting_literals = "1 -1 3 4 0\n"
+
+    expected_cugen_clause_with_nans = cupy.array([cupy.nan, cupy.nan, 1, 1])
+
+    # When
+    cugen_clause_with_nans = transform_dimacs_clause_to_cugen_clause(dimacs_clause_with_contradicting_literals,
+                                                                     number_of_literals=4)
+
+    # Then
+    cupy.testing.assert_array_equal(cugen_clause_with_nans, expected_cugen_clause_with_nans)
+
+
+def test_transform_dimacs_clause_to_cugen_clause_transforms_contradicting_literals_to_nan_in_case_of_odd_number_of_apparitions():
+    # Given
+    clause_with_contradictions = "1 -1 1 2 0\n"
+
+    expected_cugen_clause_with_nans = cupy.array([cupy.nan, 1])
+
+    # When
+    cugen_clause_with_nans = transform_dimacs_clause_to_cugen_clause(clause_with_contradictions, number_of_literals=2)
+
+    # Then
+    cupy.testing.assert_array_equal(cugen_clause_with_nans, expected_cugen_clause_with_nans)
+
+
 @patch(f'{TESTED_MODULE}.transform_dimacs_clause_to_cugen_clause', return_value=cupy.array([1, 2, 3]))
 def test_read_dimacs_file_finds_the_right_number_of_literals_and_loops_over_clauses_to_transform_them(
         mock_transform_clause, tmp_path
