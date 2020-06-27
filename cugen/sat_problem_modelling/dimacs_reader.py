@@ -1,9 +1,9 @@
 from pathlib import Path
 
-import cupy
+import numpy
 
 
-def transform_dimacs_clause_to_cugen_clause(dimacs_clause: str, number_of_literals: int) -> cupy.array:
+def transform_dimacs_clause_to_cugen_clause(dimacs_clause: str, number_of_literals: int) -> numpy.array:
     """
     Transform a clause line from the DIMACS format to a clause in the cugen SAT format
 
@@ -11,24 +11,24 @@ def transform_dimacs_clause_to_cugen_clause(dimacs_clause: str, number_of_litera
     :param number_of_literals: The number of literals in the formula
     :return: The clause in the cugen SAT format
     """
-    cugen_clause = cupy.array([cupy.nan] * number_of_literals)
+    cugen_clause = numpy.array([numpy.nan] * number_of_literals)
     signed_literals = dimacs_clause.split()[:-1]
 
     for literal in signed_literals:
         literal_as_integer = int(literal)
-        literal_as_index = int(cupy.absolute(literal_as_integer) - 1)
+        literal_as_index = int(numpy.absolute(literal_as_integer) - 1)
 
-        if cupy.isnan(cugen_clause[literal_as_index]):
+        if numpy.isnan(cugen_clause[literal_as_index]):
             cugen_clause[literal_as_index] = 0 if literal_as_integer < 0 else 1
         elif literal_as_integer != cugen_clause[literal_as_index]:
             cugen_clause[literal_as_index] = -2
 
-    cugen_clause[cugen_clause == -2] = cupy.nan
+    cugen_clause[cugen_clause == -2] = numpy.nan
 
     return cugen_clause
 
 
-def read_dimacs_file(dimacs_file_path: Path) -> cupy.ndarray:
+def read_dimacs_file(dimacs_file_path: Path) -> numpy.ndarray:
     """
     Given a path to DIMACS CNF file, this function returns a formula in the cugen SAT format
 
@@ -47,7 +47,7 @@ def read_dimacs_file(dimacs_file_path: Path) -> cupy.ndarray:
             if line[0] == 'c':
                 continue
             if line[0] == '%':
-                return cupy.array(clauses)
+                return numpy.array(clauses)
             clauses.append(transform_dimacs_clause_to_cugen_clause(line, number_of_literals))
 
-    return cupy.array(clauses)
+    return numpy.array(clauses)

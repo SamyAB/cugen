@@ -1,7 +1,7 @@
-import cupy
+import numpy
 
 
-def select_individuals(population: cupy.ndarray, population_fitness: cupy.ndarray, selection_ratio: float):
+def select_individuals(population: numpy.ndarray, population_fitness: numpy.ndarray, selection_ratio: float):
     """
     Selects randomly, with a weight, a number of individuals.
 
@@ -16,8 +16,8 @@ def select_individuals(population: cupy.ndarray, population_fitness: cupy.ndarra
     population_size = population.shape[0]
     target_population_size = int(population_size * selection_ratio)
 
-    selection_score = cupy.random.uniform(size=population_size) * population_fitness
+    selection_score = numpy.random.uniform(size=population_size) * population_fitness
 
-    population_sorted_by_selection_score = population[cupy.argsort(selection_score)[::-1]]
+    population_sorted_by_selection_score = population[numpy.argsort(selection_score)[::-1]]
 
     return population_sorted_by_selection_score[:target_population_size]

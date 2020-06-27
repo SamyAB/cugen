@@ -1,8 +1,8 @@
-import cupy
+import numpy
 
 
-def uniform_binary_crossover(first_parent_individual: cupy.ndarray,
-                             second_parent_individual: cupy.ndarray) -> cupy.ndarray:
+def uniform_binary_crossover(first_parent_individual: numpy.ndarray,
+                             second_parent_individual: numpy.ndarray) -> numpy.ndarray:
     """
     Builds a new child by randomly choosing parts of the two input parents, mimicking biological reproduction
 
@@ -10,10 +10,10 @@ def uniform_binary_crossover(first_parent_individual: cupy.ndarray,
     :param second_parent_individual: The array representing the second parent
     :return: A new individual from the mixing of the two input individuals
     """
-    return cupy.where(cupy.random.uniform() <= 0.5, first_parent_individual, second_parent_individual)
+    return numpy.where(numpy.random.uniform() <= 0.5, first_parent_individual, second_parent_individual)
 
 
-def population_binary_crossover(population: cupy.ndarray, next_generation_size: int) -> cupy.ndarray:
+def population_binary_crossover(population: numpy.ndarray, next_generation_size: int) -> numpy.ndarray:
     """
     Creates a new generation of individuals, where each individual is a child of two individuals from the input
     population. The parents are chosen randomly, and the crossover is uniform, and the new generation has a fixed size
@@ -28,18 +28,18 @@ def population_binary_crossover(population: cupy.ndarray, next_generation_size: 
 
     all_mating_seasons_children = []
     for _ in range(minimum_number_of_matings):
-        shuffled_population = cupy.random.permutation(population)[:last_mating_individual_index]
+        shuffled_population = numpy.random.permutation(population)[:last_mating_individual_index]
         pair_parents = shuffled_population[::2]
         odd_parents = shuffled_population[1::2]
 
-        mating_season_children = cupy.array([
+        mating_season_children = numpy.array([
             uniform_binary_crossover(first_parent, second_parent)
             for first_parent, second_parent in zip(pair_parents, odd_parents)
         ])
 
         all_mating_seasons_children.append(mating_season_children)
 
-    new_generation = cupy.concatenate(all_mating_seasons_children)[:next_generation_size]
+    new_generation = numpy.concatenate(all_mating_seasons_children)[:next_generation_size]
 
     return new_generation
 

@@ -1,6 +1,6 @@
 from unittest.mock import patch, call
 
-import cupy
+import numpy
 
 from cugen.sat_problem_modelling.optimizer import generate_random_first_generation, optimize
 
@@ -12,16 +12,16 @@ TESTED_MODULE = 'cugen.sat_problem_modelling.optimizer'
 @patch(f'{TESTED_MODULE}.select_individuals')
 @patch(f'{TESTED_MODULE}.population_binary_crossover')
 @patch(f'{TESTED_MODULE}.population_mutation')
-@patch(f'{TESTED_MODULE}.cupy.max')
-@patch(f'{TESTED_MODULE}.cupy.argmax')
+@patch(f'{TESTED_MODULE}.numpy.max')
+@patch(f'{TESTED_MODULE}.numpy.argmax')
 def test_optimize_should_call_the_right_functions_in_the_right_order(mock_argmax, mock_max, mock_mutation,
                                                                      mock_crossover, mock_selection,
                                                                      mock_evaluate_population,
                                                                      mock_generate_first_generation):
     # Given
-    formula = cupy.array([
-        [1, cupy.nan, cupy.nan],
-        [0, cupy.nan, cupy.nan]
+    formula = numpy.array([
+        [1, numpy.nan, numpy.nan],
+        [0, numpy.nan, numpy.nan]
     ])
     number_of_iterations = 10
     population_size = 2
@@ -62,16 +62,16 @@ def test_optimizer_stops_when_the_perfect_individual_has_been_found_in_a_generat
                                                                                     mock_selection,
                                                                                     mock_evaluation):
     # Given
-    formula = cupy.array([
+    formula = numpy.array([
         [0, 0, 1],
-        [cupy.nan, cupy.nan, 0]
+        [numpy.nan, numpy.nan, 0]
     ])
     number_of_generations = 15
     population_size = 4
     selection_ratio = 0.5
     mutation_probability = .25
 
-    mock_evaluation.side_effect = [cupy.array([0.5, 0.2, 0.3, 0.7]), cupy.array([1.0, 0.2, 0.3, 0.4])]
+    mock_evaluation.side_effect = [numpy.array([0.5, 0.2, 0.3, 0.7]), numpy.array([1.0, 0.2, 0.3, 0.4])]
 
     # When
     _ = optimize(formula, number_of_generations, population_size, selection_ratio, mutation_probability)
@@ -80,10 +80,10 @@ def test_optimizer_stops_when_the_perfect_individual_has_been_found_in_a_generat
     mock_selection.assert_called_once()
 
 
-@patch(f'{TESTED_MODULE}.evaluate_population', return_value=cupy.array([1.0, 0.2, 0.3]))
+@patch(f'{TESTED_MODULE}.evaluate_population', return_value=numpy.array([1.0, 0.2, 0.3]))
 def test_optimize_does_not_start_optimization_if_there_is_a_perfect_individual_in_the_initial_generation(mock_evaluate):
     # Given
-    formula = cupy.array([[1., 0., 1.]])
+    formula = numpy.array([[1., 0., 1.]])
     number_of_generations = 10
     population_size = 3
     selection_ratio = 0.5
@@ -117,5 +117,5 @@ def test_generate_random_first_generation_returns_individuals_with_values_that_a
     population = generate_random_first_generation(number_of_individuals, number_of_literals)
 
     # Then
-    assert cupy.all(population <= 1)
-    assert cupy.all(population >= 0)
+    assert numpy.all(population <= 1)
+    assert numpy.all(population >= 0)

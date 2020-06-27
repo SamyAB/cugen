@@ -1,6 +1,6 @@
 import logging
 
-import cupy
+import numpy
 
 from cugen.sat_problem_modelling.crossover import population_binary_crossover
 from cugen.sat_problem_modelling.evaluation import evaluate_population
@@ -8,7 +8,7 @@ from cugen.sat_problem_modelling.mutation import population_mutation
 from cugen.sat_problem_modelling.selection import select_individuals
 
 
-def generate_random_first_generation(population_size, number_of_genes_in_population) -> cupy.ndarray:
+def generate_random_first_generation(population_size, number_of_genes_in_population) -> numpy.ndarray:
     """
     Generates a random first population
 
@@ -16,11 +16,11 @@ def generate_random_first_generation(population_size, number_of_genes_in_populat
     :param number_of_genes_in_population: The number of values representing each individuals
     :return: An initial population
     """
-    return cupy.random.randint(low=0, high=2, size=(population_size, number_of_genes_in_population))
+    return numpy.random.randint(low=0, high=2, size=(population_size, number_of_genes_in_population))
 
 
-def optimize(formula: cupy.ndarray, maximum_number_of_generations: int, population_size: int, selection_ratio: float,
-             mutation_probability: float) -> cupy.ndarray:
+def optimize(formula: numpy.ndarray, maximum_number_of_generations: int, population_size: int, selection_ratio: float,
+             mutation_probability: float) -> numpy.ndarray:
     """
     Finds the best solution to the input formula within the number of generation given as input.
 
@@ -36,8 +36,8 @@ def optimize(formula: cupy.ndarray, maximum_number_of_generations: int, populati
     """
     population = generate_random_first_generation(population_size, formula.shape[1])
     population_fitness = evaluate_population(population, formula)
-    best_fitness = cupy.max(population_fitness)
-    best_individual = population[cupy.argmax(population_fitness)]
+    best_fitness = numpy.max(population_fitness)
+    best_individual = population[numpy.argmax(population_fitness)]
     logging.info(f'In the first generation the best fitness was {best_fitness * 100}%')
 
     if best_fitness == 1.:
@@ -51,9 +51,9 @@ def optimize(formula: cupy.ndarray, maximum_number_of_generations: int, populati
                                          mutation_probability)
         population_fitness = evaluate_population(population, formula)
 
-        if cupy.max(population_fitness) > best_fitness:
-            best_fitness = cupy.max(population_fitness)
-            best_individual = population[cupy.argmax(population_fitness)]
+        if numpy.max(population_fitness) > best_fitness:
+            best_fitness = numpy.max(population_fitness)
+            best_individual = population[numpy.argmax(population_fitness)]
             logging.info(f'In the generation {generation + 1} new best individual has been found, '
                          f'and it satisfies {best_fitness * 100}% of the formula')
 

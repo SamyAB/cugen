@@ -2,7 +2,7 @@ import subprocess
 import sys
 from pathlib import Path
 
-import cupy
+import numpy
 from behave import given, when, then
 from behave.runner import Context
 
@@ -13,12 +13,12 @@ RESOURCES_PATH = Path(__file__).parents[2] / 'resources'
 
 @given('a simple CNF formula')
 def simple_formula(context: Context) -> None:
-    context.formula = cupy.array([
+    context.formula = numpy.array([
         [1, 0, 1, 1],
-        [cupy.nan, cupy.nan, 1, cupy.nan],
-        [cupy.nan, 0, cupy.nan, cupy.nan],
-        [1, cupy.nan, cupy.nan, cupy.nan],
-        [cupy.nan, cupy.nan, cupy.nan, 1]
+        [numpy.nan, numpy.nan, 1, numpy.nan],
+        [numpy.nan, 0, numpy.nan, numpy.nan],
+        [1, numpy.nan, numpy.nan, numpy.nan],
+        [numpy.nan, numpy.nan, numpy.nan, 1]
     ])
 
 
@@ -56,4 +56,4 @@ def run_sat_solver_command(context: Context) -> None:
 
 @then('the solver finds the perfect solution')
 def the_best_individual_is_found(context: Context):
-    cupy.testing.assert_array_equal(context.best_individual, cupy.array([1, 0, 1, 1]))
+    numpy.testing.assert_array_equal(context.best_individual, numpy.array([1, 0, 1, 1]))
