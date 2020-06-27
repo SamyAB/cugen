@@ -1,6 +1,6 @@
 from pathlib import Path
 
-import cupy
+import numpy
 from behave import given, when, then
 from behave.runner import Context
 
@@ -21,18 +21,18 @@ def run_dimacs_reader(context: Context) -> None:
 
 @then('the cugen formula is the right formula')
 def compare_read_formula_with_the_expected_one(context: Context) -> None:
-    expected_formula = cupy.array([
-        [cupy.nan, 0, 0, cupy.nan, cupy.nan, 1, 1, cupy.nan, 1],
-        [cupy.nan, 0, 0, 0, cupy.nan, cupy.nan, cupy.nan, cupy.nan, cupy.nan],
-        [cupy.nan, 1, 1, 1, cupy.nan, cupy.nan, cupy.nan, cupy.nan, 0],
-        [0, cupy.nan, 0, cupy.nan, cupy.nan, cupy.nan, cupy.nan, cupy.nan, cupy.nan],
-        [1, cupy.nan, 1, cupy.nan, cupy.nan, 1, cupy.nan, cupy.nan, cupy.nan],
-        [cupy.nan, cupy.nan, cupy.nan, cupy.nan, cupy.nan, cupy.nan, cupy.nan, cupy.nan, cupy.nan],
-        [1, cupy.nan, 0, cupy.nan, cupy.nan, 0, cupy.nan, cupy.nan, 0],
-        [cupy.nan, 0, cupy.nan, cupy.nan, cupy.nan, 1, cupy.nan, 0, cupy.nan],
-        [0, cupy.nan, 1, cupy.nan, cupy.nan, cupy.nan, cupy.nan, 1, cupy.nan],
-        [cupy.nan, 1, cupy.nan, cupy.nan, cupy.nan, cupy.nan, 1, cupy.nan, cupy.nan],
-        [cupy.nan, cupy.nan, 0, cupy.nan, 1, cupy.nan, cupy.nan, 0, cupy.nan],
+    expected_formula = numpy.array([
+        [numpy.nan, 0, 0, numpy.nan, numpy.nan, 1, 1, numpy.nan, 1],
+        [numpy.nan, 0, 0, 0, numpy.nan, numpy.nan, numpy.nan, numpy.nan, numpy.nan],
+        [numpy.nan, 1, 1, 1, numpy.nan, numpy.nan, numpy.nan, numpy.nan, 0],
+        [0, numpy.nan, 0, numpy.nan, numpy.nan, numpy.nan, numpy.nan, numpy.nan, numpy.nan],
+        [1, numpy.nan, 1, numpy.nan, numpy.nan, 1, numpy.nan, numpy.nan, numpy.nan],
+        [numpy.nan, numpy.nan, numpy.nan, numpy.nan, numpy.nan, numpy.nan, numpy.nan, numpy.nan, numpy.nan],
+        [1, numpy.nan, 0, numpy.nan, numpy.nan, 0, numpy.nan, numpy.nan, 0],
+        [numpy.nan, 0, numpy.nan, numpy.nan, numpy.nan, 1, numpy.nan, 0, numpy.nan],
+        [0, numpy.nan, 1, numpy.nan, numpy.nan, numpy.nan, numpy.nan, 1, numpy.nan],
+        [numpy.nan, 1, numpy.nan, numpy.nan, numpy.nan, numpy.nan, 1, numpy.nan, numpy.nan],
+        [numpy.nan, numpy.nan, 0, numpy.nan, 1, numpy.nan, numpy.nan, 0, numpy.nan],
     ])
 
-    cupy.testing.assert_array_equal(context.formula, expected_formula)
+    numpy.testing.assert_array_equal(context.formula, expected_formula)
