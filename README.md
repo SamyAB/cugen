@@ -1,15 +1,15 @@
-# CuGen : CUDA Genetic Algorithm
+# NuGen : NumPy Genetic Algorithm
 
-CuGen is a Boolean satisfiability problem approximative solver, using a genetic algorithm to explore the solution space, developped using CuPy
+NuGen is a Boolean satisfiability problem approximative solver, using a genetic algorithm to explore the solution space, developped using NumPy
 
 ## Formula
 
-The formulae solved by CuGen are in the Cunnjonctif Normal Form (CNF), written in the DIMACS format
+The formulae solved by NuGen are in the Cunnjonctif Normal Form (CNF), written in the DIMACS format
 
 ## Usage
 
 ```shell
-cugen /path/to/dimacs.cnf 10000 200 0.25 0.5
+nugen /path/to/dimacs.cnf 10000 200 0.25 0.5
 ```
 
 Where:
