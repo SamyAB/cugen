@@ -3,9 +3,9 @@ from pathlib import Path
 
 import typer
 
-from cugen.sat_problem_modelling.dimacs_reader import read_dimacs_file
-from cugen.sat_problem_modelling.optimizer import optimize
-from cugen.utils.logger import init_logger
+from nugen.sat_problem_modelling.dimacs_reader import read_dimacs_file
+from nugen.sat_problem_modelling.optimizer import optimize
+from nugen.utils.logger import init_logger
 
 app = typer.Typer()
 

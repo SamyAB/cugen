@@ -2,9 +2,9 @@ from unittest.mock import patch
 
 import numpy
 
-from cugen.sat_problem_modelling.selection import select_individuals
+from nugen.sat_problem_modelling.selection import select_individuals
 
-TESTED_MODULE = 'cugen.sat_problem_modelling.selection'
+TESTED_MODULE = 'nugen.sat_problem_modelling.selection'
 
 
 @patch(f'{TESTED_MODULE}.numpy.random.uniform', return_value=numpy.array([0.4, 0.2, 0.2]))

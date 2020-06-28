@@ -1,7 +1,7 @@
 import numpy
 import pytest
 
-from cugen.sat_problem_modelling.evaluation import evaluate_individual_fitness, evaluate_population
+from nugen.sat_problem_modelling.evaluation import evaluate_individual_fitness, evaluate_population
 
 
 @pytest.fixture()

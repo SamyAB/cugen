@@ -6,7 +6,7 @@ import numpy
 from behave import given, when, then
 from behave.runner import Context
 
-from cugen.sat_problem_modelling.optimizer import optimize
+from nugen.sat_problem_modelling.optimizer import optimize
 
 RESOURCES_PATH = Path(__file__).parents[2] / 'resources'
 
@@ -40,7 +40,7 @@ def run_the_solver_in_easy_mode(context: Context):
 
 @when('the SAT solver command is run')
 def run_sat_solver_command(context: Context) -> None:
-    main_path = Path(__file__).parents[3] / 'cugen' / '__main__.py'
+    main_path = Path(__file__).parents[3] / 'nugen' / '__main__.py'
     maximum_number_of_generations = '1000000'
     population_size = '10'
     selection_ratio = '0.5'

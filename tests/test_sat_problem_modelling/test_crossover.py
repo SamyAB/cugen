@@ -3,9 +3,9 @@ from unittest.mock import patch
 import numpy
 import pytest
 
-from cugen.sat_problem_modelling.crossover import uniform_binary_crossover, population_binary_crossover
+from nugen.sat_problem_modelling.crossover import uniform_binary_crossover, population_binary_crossover
 
-TESTED_MODULE = 'cugen.sat_problem_modelling.crossover'
+TESTED_MODULE = 'nugen.sat_problem_modelling.crossover'
 
 
 @patch(f'{TESTED_MODULE}.numpy.random.uniform')

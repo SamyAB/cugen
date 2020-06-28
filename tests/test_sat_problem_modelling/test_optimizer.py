@@ -2,9 +2,9 @@ from unittest.mock import patch, call
 
 import numpy
 
-from cugen.sat_problem_modelling.optimizer import generate_random_first_generation, optimize
+from nugen.sat_problem_modelling.optimizer import generate_random_first_generation, optimize
 
-TESTED_MODULE = 'cugen.sat_problem_modelling.optimizer'
+TESTED_MODULE = 'nugen.sat_problem_modelling.optimizer'
 
 
 @patch(f'{TESTED_MODULE}.generate_random_first_generation')

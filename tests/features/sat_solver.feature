@@ -1,4 +1,4 @@
-Feature: Solving SAT problems with cugen
+Feature: Solving SAT problems with nugen
 
   Scenario: run the solver on a simple SAT CNF formula
     Given a simple CNF formula

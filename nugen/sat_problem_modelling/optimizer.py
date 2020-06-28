@@ -2,10 +2,10 @@ import logging
 
 import numpy
 
-from cugen.sat_problem_modelling.crossover import population_binary_crossover
-from cugen.sat_problem_modelling.evaluation import evaluate_population
-from cugen.sat_problem_modelling.mutation import population_mutation
-from cugen.sat_problem_modelling.selection import select_individuals
+from nugen.sat_problem_modelling.crossover import population_binary_crossover
+from nugen.sat_problem_modelling.evaluation import evaluate_population
+from nugen.sat_problem_modelling.mutation import population_mutation
+from nugen.sat_problem_modelling.selection import select_individuals
 
 
 def generate_random_first_generation(population_size, number_of_genes_in_population) -> numpy.ndarray:

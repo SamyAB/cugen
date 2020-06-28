@@ -1,4 +1,4 @@
-from cugen import __version__
+from nugen import __version__
 
 
 def test_version():
