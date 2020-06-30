@@ -1,6 +1,7 @@
 from unittest.mock import patch, call
 
 import cupy
+import pytest
 
 from cugen.sat_problem_modelling.dimacs_reader import transform_dimacs_clause_to_cugen_clause, read_dimacs_file
 
@@ -47,6 +48,17 @@ def test_transform_dimacs_clause_to_cugen_clause_transforms_contradicting_litera
 
     # Then
     cupy.testing.assert_array_equal(cugen_clause_with_nans, expected_cugen_clause_with_nans)
+
+
+def test_transform_dimacs_clause_to_cugen_clause_raises_exception_when_literal_is_out_of_bounds():
+    # Given
+    clause_with_literal_out_of_bounds = '42 -246 528 0\n'
+    number_of_literals = 527
+
+    # Then
+    with pytest.raises(IndexError):
+        # When
+        _ = transform_dimacs_clause_to_cugen_clause(clause_with_literal_out_of_bounds, number_of_literals)
 
 
 @patch(f'{TESTED_MODULE}.transform_dimacs_clause_to_cugen_clause', return_value=cupy.array([1, 2, 3]))

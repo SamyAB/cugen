@@ -16,7 +16,7 @@ def transform_dimacs_clause_to_cugen_clause(dimacs_clause: str, number_of_litera
 
     for literal in signed_literals:
         literal_as_integer = int(literal)
-        literal_as_index = cupy.absolute(literal_as_integer) - 1
+        literal_as_index = int(cupy.absolute(literal_as_integer) - 1)
 
         if cupy.isnan(cugen_clause[literal_as_index]):
             cugen_clause[literal_as_index] = 0 if literal_as_integer < 0 else 1
